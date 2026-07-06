@@ -1,5 +1,22 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
+
+
+class Manager(UserManager):
+    def create_user(self, email, password=None):
+        if not email:
+            raise ValueError("Пользователь должен иметь email")
+        user=self.model(email=email)
+        user.save(using=self._db)
+        return user
+    def create_superuser(self, email, password=None):
+        user=self.model(email=email)
+        user.username=""
+        user.is_staff=True
+        user.is_superuser=True
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
 
 class User(AbstractUser):
@@ -8,6 +25,8 @@ class User(AbstractUser):
     city = models.CharField(max_length=50, blank=True, null=True, verbose_name="Город", help_text="Введите город")
     avatar = models.ImageField(upload_to="users/avatars/", blank=True, null=True, verbose_name="Аватар", help_text="Загрузите аватар")
     phone_number = models.CharField(max_length=20, blank=True, null=True)
+
+    objects = Manager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
