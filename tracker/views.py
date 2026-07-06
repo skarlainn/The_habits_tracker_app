@@ -12,6 +12,7 @@ class PleasantHabitViewSet(viewsets.ModelViewSet):
         pleasant_habit = serializer.save(user=self.request.user)
         pleasant_habit.save()
 
+
 class UsefulHabitCreateView(generics.CreateAPIView):
     serializer_class = UsefulHabitSerializer
 
@@ -19,10 +20,17 @@ class UsefulHabitCreateView(generics.CreateAPIView):
         useful_habit = serializer.save(user=self.request.user)
         useful_habit.save()
 
+
 class UsefulHabitListView(generics.ListAPIView):
     queryset = UsefulHabit.objects.all()
     serializer_class = UsefulHabitSerializer
 
+
 class UsefulHabitDetailView(generics.RetrieveAPIView):
+    queryset = UsefulHabit.objects.all()
+    serializer_class = UsefulHabitSerializer
+
+
+class UsefulHabitDeleteView(generics.DestroyAPIView):
     queryset = UsefulHabit.objects.all()
     serializer_class = UsefulHabitSerializer
