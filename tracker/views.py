@@ -35,6 +35,7 @@ class UsefulHabitUpdateView(generics.UpdateAPIView):
     queryset = UsefulHabit.objects.all()
     serializer_class = UsefulHabitSerializer
 
+
 class UsefulHabitDeleteView(generics.DestroyAPIView):
     queryset = UsefulHabit.objects.all()
     serializer_class = UsefulHabitSerializer

@@ -25,6 +25,13 @@ class User(AbstractUser):
     email = models.EmailField(
         unique=True, verbose_name="Email", help_text="Введите email"
     )
+    chat_id = models.CharField(
+        max_length=50,
+        verbose_name="Телеграм сhat-id",
+        help_text="Укажите телеграм сhat-id",
+        null=True,
+        blank=True,
+    )
     city = models.CharField(
         max_length=50,
         blank=True,
