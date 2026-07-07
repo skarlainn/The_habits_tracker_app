@@ -9,6 +9,7 @@ from tracker.views import (
     UsefulHabitDeleteView,
     UsefulHabitListView,
     UsefulHabitUpdateView,
+    PublishedUsefulHabitListView,
 )
 
 app_name = TrackerConfig.name
@@ -20,6 +21,11 @@ urlpatterns = [
         "useful-habits/create/",
         UsefulHabitCreateView.as_view(),
         name="create_useful_habit",
+    ),
+    path(
+        "useful-habits/published/",
+        PublishedUsefulHabitListView.as_view(),
+        name="published_useful_habits",
     ),
     path("useful-habits/", UsefulHabitListView.as_view(), name="useful_habits"),
     path(
