@@ -20,6 +20,7 @@ eventlet = "^0.41.0"
 redis = "^8.0.1"
 requests = "^2.34.2"
 django-celery-beat = "^2.9.0"
+coverage = "^7.15.0"
 
 
 [tool.poetry.group.lint.dependencies]

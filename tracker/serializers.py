@@ -21,6 +21,7 @@ class UsefulHabitSerializer(serializers.ModelSerializer):
         """Проверяет, что выбрано только одно поле варианта поощрения."""
         if data.get("related_habit") and data.get("award"):
             raise serializers.ValidationError("Выберите только один вариант поощрения")
+        return data
 
     class Meta:
         model = UsefulHabit
