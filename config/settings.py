@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "tracker",
     "corsheaders",
     "drf_yasg",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
