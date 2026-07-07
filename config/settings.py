@@ -153,9 +153,9 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOW_ALL_ORIGINS = False
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BROKER_URL = "redis://localhost:6379"
 
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 
 CELERY_TIMEZONE = TIME_ZONE
 
@@ -164,17 +164,17 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CELERY_BEAT_SCHEDULE = {
-    'send_telegram_message': {
-        'task': 'tracker.tasks.send_telegram_message',
-        'schedule': timedelta(minutes=1),
+    "send_telegram_message": {
+        "task": "tracker.tasks.send_telegram_message",
+        "schedule": timedelta(minutes=1),
     },
 }
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
     }
 }
 
-TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")

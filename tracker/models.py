@@ -57,7 +57,7 @@ class UsefulHabit(models.Model):
         null=True,
         blank=True,
     )
-    periodicity = models.PositiveIntegerField(
+    periodicity = models.IntegerField(
         verbose_name="Периодичность",
         help_text="Укажите периодичность выполнения в днях",
         default=1,
@@ -70,26 +70,11 @@ class UsefulHabit(models.Model):
         blank=True,
     )
 
-    DURATION_CHOICES = (
-        ("10", "10 секунд"),
-        ("20", "20 секунд"),
-        ("30", "30 секунд"),
-        ("40", "40 секунд"),
-        ("50", "50 секунд"),
-        ("60", "60 секунд"),
-        ("70", "70 секунд"),
-        ("80", "80 секунд"),
-        ("90", "90 секунд"),
-        ("100", "100 секунд"),
-        ("110", "110 секунд"),
-        ("120", "120 секунд"),
-    )
-    duration = models.CharField(
-        max_length=10,
-        choices=DURATION_CHOICES,
+    duration = models.IntegerField(
         verbose_name="Продолжительность",
-        help_text="Укажите продолжительность",
+        help_text="Укажите продолжительность в секундах",
     )
+
     is_published = models.BooleanField(
         verbose_name="Признак публичности",
         help_text="Опубликовать привычку?",
