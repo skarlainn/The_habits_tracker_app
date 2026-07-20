@@ -1,5 +1,5 @@
 import os
-
+import sys
 
 from pathlib import Path
 from dotenv import load_dotenv
@@ -179,3 +179,11 @@ CACHES = {
 }
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+
+if "test" in sys.argv:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "test_db.sqlite3",
+        }
+    }
