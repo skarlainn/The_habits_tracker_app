@@ -60,9 +60,9 @@ class UsefulHabitDetailView(generics.RetrieveAPIView):
 
 
 class UsefulHabitUpdateView(generics.UpdateAPIView):
-    #queryset = UsefulHabit.objects.all()
+    # queryset = UsefulHabit.objects.all()
     serializer_class = UsefulHabitSerializer
-    #permission_classes = (IsAuthenticated, IsOwner)
+    # permission_classes = (IsAuthenticated, IsOwner)
 
     def get_queryset(self):
         user = self.request.user
@@ -70,9 +70,9 @@ class UsefulHabitUpdateView(generics.UpdateAPIView):
 
 
 class UsefulHabitDeleteView(generics.DestroyAPIView):
-    #queryset = UsefulHabit.objects.all()
+    # queryset = UsefulHabit.objects.all()
     serializer_class = UsefulHabitSerializer
-    #permission_classes = (IsAuthenticated, IsOwner)
+    # permission_classes = (IsAuthenticated, IsOwner)
 
     def get_queryset(self):
         user = self.request.user

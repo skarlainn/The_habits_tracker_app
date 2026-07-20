@@ -5,17 +5,32 @@ from rest_framework.test import APITestCase
 from tracker.models import UsefulHabit, PleasantHabit
 from users.models import User
 
+
 class UsefulHabitTestCase(APITestCase):
 
     def setUp(self) -> None:
         self.user = User.objects.create(email="test@test.ru", chat_id="123")
         self.client.force_authenticate(user=self.user)
         self.pleasant_habit = PleasantHabit.objects.create(action="Well done")
-        self.useful_habit = UsefulHabit.objects.create(place="home", time="13:00", action="Run", related_habit=self.pleasant_habit, duration=12, user=self.user)
+        self.useful_habit = UsefulHabit.objects.create(
+            place="home",
+            time="13:00",
+            action="Run",
+            related_habit=self.pleasant_habit,
+            duration=12,
+            user=self.user,
+        )
 
     def test_useful_habit_create(self):
         url = reverse("tracker:create_useful_habit")
-        data = {"place": "home", "time": "12", "action": "Run", "duration": 120, "related_habit": self.pleasant_habit.pk, "user": self.user.pk}
+        data = {
+            "place": "home",
+            "time": "12",
+            "action": "Run",
+            "duration": 120,
+            "related_habit": self.pleasant_habit.pk,
+            "user": self.user.pk,
+        }
         response = self.client.post(url, data)
         result = response.json()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -34,29 +49,58 @@ class UsefulHabitTestCase(APITestCase):
 
     def test_useful_habit_create_invalid_duration(self):
         url = reverse("tracker:create_useful_habit")
-        data = data = {"place": "home", "time": "12", "action": "Run", "duration": 121, "related_habit": self.pleasant_habit.pk, "user": self.user.pk}
+        data = data = {
+            "place": "home",
+            "time": "12",
+            "action": "Run",
+            "duration": 121,
+            "related_habit": self.pleasant_habit.pk,
+            "user": self.user.pk,
+        }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.json().get("duration"),
-                         ["Максимальное время выполнения привычки 120 секунд"])
+        self.assertEqual(
+            response.json().get("duration"),
+            ["Максимальное время выполнения привычки 120 секунд"],
+        )
         self.assertEqual(UsefulHabit.objects.all().count(), 1)
 
     def test_useful_habit_create_invalid_award(self):
         url = reverse("tracker:create_useful_habit")
-        data = data = {"place": "home", "time": "12", "action": "Run", "duration": 50, "related_habit": self.pleasant_habit.pk, "award": "cookies", "user": self.user.pk}
+        data = data = {
+            "place": "home",
+            "time": "12",
+            "action": "Run",
+            "duration": 50,
+            "related_habit": self.pleasant_habit.pk,
+            "award": "cookies",
+            "user": self.user.pk,
+        }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.json().get("non_field_errors"),
-                         ["Выберите только один вариант поощрения"])
+        self.assertEqual(
+            response.json().get("non_field_errors"),
+            ["Выберите только один вариант поощрения"],
+        )
         self.assertEqual(UsefulHabit.objects.all().count(), 1)
 
     def test_useful_habit_create_invalid_periodicity(self):
         url = reverse("tracker:create_useful_habit")
-        data = {"place": "home", "time": "12", "action": "Run", "duration": 120, "related_habit": self.pleasant_habit.pk, "user": self.user.pk, "periodicity": 8}
+        data = {
+            "place": "home",
+            "time": "12",
+            "action": "Run",
+            "duration": 120,
+            "related_habit": self.pleasant_habit.pk,
+            "user": self.user.pk,
+            "periodicity": 8,
+        }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.json().get("periodicity"),
-                         ["Нельзя выполнять привычку реже, чем 1 раз в 7 дней"])
+        self.assertEqual(
+            response.json().get("periodicity"),
+            ["Нельзя выполнять привычку реже, чем 1 раз в 7 дней"],
+        )
         self.assertEqual(UsefulHabit.objects.all().count(), 1)
 
     def test_useful_habit_list(self):
@@ -78,9 +122,10 @@ class UsefulHabitTestCase(APITestCase):
                     "award": None,
                     "is_published": True,
                     "user": self.user.pk,
-                    "related_habit": self.useful_habit.related_habit.pk
+                    "related_habit": self.useful_habit.related_habit.pk,
                 }
-            ]}
+            ],
+        }
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data, result)
 
